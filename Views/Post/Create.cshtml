@@ -1,0 +1,13 @@
+﻿@using ForumApp.ViewModels
+@model CreatePostViewModel
+
+<form asp-action="Create" asp-route-forumId="@Model.ThreadId" enctype="multipart/form-data">
+    <input type="hidden" id="AuthorId" name="AuthorId" asp-for="AuthorId" />
+    <input type="hidden" id="ThreadId" name="ThreadId" asp-for="ThreadId" />
+    <div class="form-group">
+        <label asp-for="Content">Post content</label>
+        <input asp-for="Content" class="form-control" placeholder="Enter content">
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

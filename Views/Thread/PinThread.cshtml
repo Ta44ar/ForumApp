@@ -1,0 +1,19 @@
+﻿@using ForumApp.ViewModels
+@model PinThreadViewModel
+
+<form asp-action="PinThread"enctype="multipart/form-data">
+    <input type="hidden" id="ForumId" name="ForumId" asp-for="ForumId" />
+    <input type="hidden" id="Pinned" name="Pinned" asp-for="Pinned" />
+    <h3>
+        Are you sure you want to
+        @if (!Model.Pinned)
+        {
+            <span>pin</span>
+        }
+        else
+        {
+            <span>unpin</span>
+        } this thread?
+    </h3>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

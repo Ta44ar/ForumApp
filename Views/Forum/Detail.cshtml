@@ -1,0 +1,68 @@
+﻿@using Microsoft.AspNetCore.Identity
+@model Forum
+
+@inject SignInManager<User> SignInManager
+
+@{
+    ViewData["Title"] = @Model.Title;
+}
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+    <h1>@Model.Title</h1>
+    @if (SignInManager.IsSignedIn(User))
+    {
+        <a type="button" asp-controller="Thread" asp-action="Create" asp-route-forumId="@Model.Id" class="btn btn-sm btn-outline-secondary">Add Thread</a>
+    }
+</div>
+
+<div>
+    <p><em>@Model.ForumCategory</em></p>
+    <p>@Model.Description</p>
+    <div style="font-size: 0.8em; color: #777;">Creation Date: @Model.CreationDate.ToString("yyyy-MM-dd HH:mm:ss")</div>
+
+    @if (Model.Threads.Any(t => t.Pinned))
+    {
+        <h3>Pinned Threads:</h3>
+        <div class="thread-boxes">
+            @foreach (var pinnedThread in Model.Threads.Where(t => t.Pinned))
+            {
+                <div class="thread-box">
+                    <p>@pinnedThread.Title</p>
+                    <a type="button" asp-controller="Thread" asp-action="Details" asp-route-id="@pinnedThread.Id" class="btn btn-sm btn-outline-secondary">View Thread</a>
+                    @if (User.IsInRole("admin"))
+                    {
+                        <a type="button" asp-controller="Thread" asp-action="PinThread" asp-route-id="@pinnedThread.Id" class="btn btn-sm btn-outline-secondary">Unpin Thread</a>
+                    }
+                </div>
+            }
+        </div>
+        <hr />
+    }
+
+    <div class="thread-boxes">
+        @foreach (var unpinnedThread in Model.Threads.Where(t => !t.Pinned))
+        {
+            <div class="thread-box">
+                <p>@unpinnedThread.Title</p>
+                <a type="button" asp-controller="Thread" asp-action="Details" asp-route-id="@unpinnedThread.Id" class="btn btn-sm btn-outline-secondary">View Thread</a>
+                @if (User.IsInRole("admin"))
+                {
+                    <a type="button" asp-controller="Thread" asp-action="PinThread" asp-route-id="@unpinnedThread.Id" class="btn btn-sm btn-outline-secondary">Pin Thread</a>
+                }
+            </div>
+        }
+    </div>
+</div>
+
+<style>
+    .thread-boxes {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .thread-box {
+        border: 1px solid #ccc;
+        padding: 10px;
+        margin-bottom: 10px;
+    }
+</style>

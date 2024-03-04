@@ -1,0 +1,81 @@
+﻿@model Thread
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Thread Details</title>
+    <!-- Dodaj linki do stylów CSS, skryptów JavaScript, itp., jeśli są wymagane -->
+    <style>
+        .thread-details {
+            margin-bottom: 20px;
+        }
+
+        .author-info {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #777;
+        }
+
+        .post-list {
+            margin-top: 20px;
+        }
+
+        .post-box {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+
+        .author-info-post {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8em;
+            color: #777;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+    @if (Model != null)
+    {
+        <div class="thread-details">
+            <h2>@Model.Title</h2>
+            <p class="thread-content">@Model.Content</p>
+            <div class="author-info">
+                <p>Created by: @Model.Author.UserName</p>
+                <p>Creation Date: @Model.CreationDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+            </div>
+            @if (User.Identity.IsAuthenticated)
+            {
+                <a type="button" asp-controller="Post" asp-action="Create" asp-route-threadId="@Model.Id" class="btn btn-sm btn-outline-secondary">Add Post</a>
+            }
+            else
+            {
+                <p></p>
+            }
+        </div>
+
+        <div class="post-list">
+            <h3>Posts</h3>
+            <div class="post-boxes">
+                @foreach (var post in Model.Posts)
+                {
+                    <div class="post-box">
+                        <p>@post.Content</p>
+                        <div class="author-info-post">
+                            <p>Posted by: @post.Author.UserName</p>
+                            <p>Post Date: @post.CreationDate.ToString("yyyy-MM-dd HH:mm:ss")</p>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+    else
+    {
+        <p>Thread not found.</p>
+    }
+
+</body>
+</html>

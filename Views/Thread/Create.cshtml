@@ -1,0 +1,17 @@
+﻿@using ForumApp.ViewModels
+@model CreateThreadViewModel
+
+<form asp-action="Create" asp-route-forumId="@Model.ForumId" enctype="multipart/form-data">
+    <input type="hidden" id="AuthorId" name="AuthorId" asp-for="AuthorId" />
+    <div class="form-group">
+        <label asp-for="Title">Thread name</label>
+        <input asp-for="Title" class="form-control" placeholder="Enter thread name">
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Content">Thread content</label>
+        <input asp-for="Content" class="form-control" placeholder="Enter thread content">
+        <span asp-validation-for="Content" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>

@@ -1,0 +1,22 @@
+﻿@model int
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@* <div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h1>User Count: @Model</h1>
+</div>
+ *@
+
+
+<div class="container d-flex align-items-center" style="height: 80vh">
+    <div style="max-width: 750px">
+        <h1 class="jumbotron-heading">Forumapp</h1>
+        <p class="lead text-muted">Discover a thriving forum community! Engage in insightful discussions with like-minded individuals. Join us – already home to <strong style="font-size: 2rem">@Model</strong> users!</p>
+        <p>
+            <a asp-controller="Forum" asp-action="Index" class="btn btn-primary my-2">Explore Forums</a>
+        </p>
+    </div>
+</div>
